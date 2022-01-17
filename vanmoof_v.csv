@@ -1,0 +1,57 @@
+Country,City,Unique Riders,Test Rides,Sessions,Page Views,Sales
+Netherlands,Hilversum,342,0,4561,13863,165
+Netherlands,Amersfoort,156,0,4853,15333,70
+Netherlands,Amsterdam,"8,508","6,237",126637,393785,1703
+Netherlands,Arnhem,206,0,3443,10775,88
+Netherlands,Eindhoven,276,362,6929,20984,119
+Netherlands,Groningen,187,227,5053,14673,73
+Netherlands,Haarlem,992,0,8538,26659,478
+Netherlands,Leiden,101,0,3203,9826,52
+Netherlands,Maastricht,89,101,2106,5999,47
+Netherlands,Nijmegen,82,0,3753,10866,38
+Netherlands,Rotterdam,539,629,43949,116239,216
+Netherlands,The Hague,618,292,14734,45606,241
+Netherlands,Utrecht,662,321,42858,75186,269
+Netherlands,Zwolle,87,0,3080,9409,35
+France,Bordeaux,76,0,4680,10668,46
+France,Lyon,41,0,5911,13024,21
+France,Paris,"1,679","1,470",44047,111639,681
+France,Strasbourg,39,0,1783,4267,15
+Denmark,Copenhagen,114,0,7975,20473,79
+Austria,Vienna,139,456,12598,34003,98
+Ireland,Dublin,241,527,15856,41133,145
+Germany,Berlin,"1,937","4,673",67101,186424,816
+Germany,Bonn,278,471,4040,14192,189
+Germany,Bremen,536,"1,558",8408,27328,357
+Germany,Cologne,480,"1,794",26230,76282,283
+Germany,Dortmund,262,0,9049,26574,179
+Germany,Dresden,141,0,5847,17952,85
+Germany,Dusseldorf,357,"1,981",9642,31664,232
+Germany,Essen,332,318,7615,25520,223
+Germany,Frankfurt,250,"1,297",20020,59228,130
+Germany,Hamburg,"1,107","3,348",46456,135746,651
+Germany,Hanover,420,0,14998,43510,238
+Germany,Karlsruhe,138,430,3992,11984,98
+Germany,Leipzig,193,"1,049",5169,16429,119
+Germany,Munich,509,"1,662",21690,62124,285
+Germany,Munster,323,0,7082,24543,208
+Germany,Nuremberg,224,331,4949,14558,133
+Germany,Stuttgart,276,946,13666,37234,185
+Belgium,Antwerp,158,435,4247,11361,74
+Belgium,Brussels,201,210,8508,20872,102
+Sweden,Gothenburg,24,0,2887,7058,19
+Sweden,Stockholm,138,604,8444,20926,86
+United Kingdom,Bristol,77,222,5035,12843,38
+United Kingdom,Edinburgh,103,202,3623,10265,59
+United Kingdom,London,"2,270","2,357",81513,209695,916
+United Kingdom,Manchester,86,0,4036,9007,44
+Japan,Osaka,62,0,20585,47194,55
+Japan,Tokyo,822,"1,145",55985,153063,523
+Finland,Helsinki,41,136,4360,9615,25
+United States,Los Angeles,270,0,10203,26040,152
+United States,New York,979,"1,030",26895,72176,344
+United States,Portland,78,0,2803,7572,43
+United States,San Francisco,955,"1,244",13010,38941,533
+United States,Seattle,266,746,7322,20818,165
+United States,Washington D.C.,77,0,3319,8648,42
+Luxembourg,Luxembourg,129,0,4347,12616,93
