@@ -1,0 +1,171 @@
+---
+title: "van Moof Case study"
+author: "Liam Manor"
+date: "1/17/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache =TRUE)
+install.packages("readr")
+library(readr)
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("dplyr")
+library(dplyr)
+```
+
+## User’s riding behaviour
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r read-files, include = FALSE, echo = FALSE}
+vanmoof_df <- read_csv("vanmoof_v.csv")
+rider_data_df <- read_csv("rider_data.csv")
+city_clusters_df <- read_csv("city_clusters.csv")
+```
+
+
+```{r vanmoof}
+colnames(vanmoof_df)
+
+colnames(rider_data_df)
+
+colnames(city_clusters_df)
+```
+
+## Plots
+
+Average ride distance
+
+```{r ride1, echo=FALSE}
+dnorm.count <- function(x, mean = 0, sd = 1, log = FALSE, n = 1, binwidth = 1){
+  n * binwidth * dnorm(x = x, mean = mean, sd = sd, log = log)} 
+ggplot(rider_data_df, aes(x=average_distance_km)) + geom_histogram(bins =10,color = "white", fill = "#9FE367",boundary = 0.5) +
+  geom_vline(aes(xintercept = mean(average_distance_km)), linetype="dashed", size = 1.6, color = "#FF0000") +
+  stat_function(fun = dnorm.count, color = "#6D67E3", args = list(mean=mean(rider_data_df$average_distance_km), sd =sd(rider_data_df$average_distance_km), n = nrow(rider_data_df)), lwd = 1.2) + 
+geom_text(aes(label = paste0("mean = ", mean(average_distance_km)), 
+                x = 10, y  = 15000, color = "#FF0000")) + 
+annotate("text", label = "SD Curve", x = 10, y = 10000, size = 4, colour = "#6D67E3") + 
+labs(x='Average Distance KM', y = 'Frequency', title = 'Frequency Average Distance of riders') +
+# remove legend with theme()
+theme(legend.position = "None") +
+xlim(0,20) 
+```
+
+Average ride speed
+
+```{r ride2, echo=FALSE}
+ggplot(rider_data_df, aes(x=average_speed_kmh)) + geom_histogram(bins =10,color = "white", fill = "#9FE367",boundary = 0.5) +
+  geom_vline(aes(xintercept = mean(average_speed_kmh)), 
+             linetype="dashed",
+             size = 1.6, 
+             color = "#FF0000") +
+  stat_function(fun = dnorm.count, color = "#6D67E3", args = list(mean=mean(rider_data_df$average_speed_kmh), sd =sd(rider_data_df$average_speed_kmh), n = nrow(rider_data_df)), lwd = 1.2) + 
+geom_text(aes(label = paste0("mean = ", mean(average_speed_kmh)), 
+                x = 30, y  = 30000, color = "#FF0000")) + 
+annotate("text", label = "SD Curve", x = 30, y = 10000, size = 4, colour = "#6D67E3") + 
+labs(x='Average Speed KMH', y = 'Frequency', title = 'Frequency Average Speed of riders')+
+# remove legend with theme()
+theme(legend.position = "None") +
+xlim(0,40) 
+```
+
+Average ride duration
+
+```{r ride3, echo=FALSE}
+ggplot(rider_data_df, aes(x=average_duration_seconds/60)) + geom_histogram(bins =10,color = "white", fill = "#9FE367",boundary = 0.5) +
+geom_vline(aes(xintercept = mean(average_duration_seconds/60)), 
+             linetype="dashed",
+             size = 1.6, 
+             color = "#FF0000") +
+  stat_function(fun = dnorm.count, color = "#6D67E3", args = list(mean=mean(rider_data_df$average_duration_seconds/60), sd =sd(rider_data_df$average_duration_seconds/60), n = nrow(rider_data_df)), lwd = 1.2) + 
+geom_text(aes(label = paste0("mean = ", mean(average_duration_seconds/60)), 
+                x = 70, y  = 30000, color = "#FF0000")) + 
+annotate("text", label = "SD Curve", x = 60, y = 5000, size = 4, colour = "#6D67E3") + 
+labs(x='Average Duration (minutes)', y = 'Frequency', title = 'Average Duration (minutes) riding')+
+# remove legend with theme()
+theme(legend.position = "None") +
+xlim(0,100) 
+```
+
+Maximum Distance 
+
+```{r ride4, echo=FALSE}
+ggplot(rider_data_df, aes(x=max_distance)) + geom_histogram(bins =100,color = "white", fill = "#9FE367",boundary = 0.5) +
+geom_vline(aes(xintercept = mean(max_distance)), 
+             linetype="dashed",
+             size = 1.6, 
+             color = "#FF0000") +
+  stat_function(fun = dnorm.count, color = "#6D67E3", args = list(mean=mean(rider_data_df$max_distance), sd =sd(rider_data_df$max_distance), n = nrow(rider_data_df)), lwd = 1.2) + 
+geom_text(aes(label = paste0("mean = ", mean(max_distance)), 
+                x = 30, y  = 2000, color = "#FF0000")) + 
+annotate("text", label = "SD Curve", x = 25, y = 1600, size = 4, colour = "#6D67E3") + 
+labs(x='Maximum distance (KM)', y = 'Frequency', title = 'Maximum distance riders')+
+# remove legend with theme()
+theme(legend.position = "None") +
+xlim(0,50) + 
+ylim(0,2500)
+```
+
+
+Weekend rides (fraction)
+
+```{r ride5, echo=FALSE}
+percent <- function(x, digits = 2, format = "f", ...) {
+  paste0(formatC(100 * x, format = format, digits = digits, ...), "%")
+}
+rider_data_df <- mutate(rider_data_df, weekend_rides_F = weekend_rides/entries*100)
+ggplot(rider_data_df, aes(x=weekend_rides_F)) + geom_histogram(bins =20,color = "white", fill = "#9FE367",boundary = 0.5) +
+geom_vline(aes(xintercept = mean(weekend_rides_F)), 
+             linetype="dashed",
+             size = 1.6, 
+             color = "#FF0000") +
+  stat_function(fun = dnorm.count, color = "#6D67E3", args = list(mean=mean(rider_data_df$weekend_rides_F), sd =sd(rider_data_df$weekend_rides_F), n = nrow(rider_data_df)), lwd = 1.2) + 
+geom_text(aes(label = paste0("mean = ", percent(mean(weekend_rides_F/100))), 
+                x = 50, y  = 2000, color = "#FF0000")) + 
+annotate("text", label = "SD Curve", x = 45, y = 1000, size = 4, colour = "#6D67E3") + 
+labs(x='Weekend rides %', y = 'Frequency', title = 'Weekend rides %')+
+# remove legend with theme()
+theme(legend.position = "None") +
+xlim(0,100) + 
+ylim(0,2500)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
