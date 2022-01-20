@@ -6,6 +6,8 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
+install.packages("knitr")
+library(knitr)
 knitr::opts_chunk$set(cache =TRUE)
 install.packages("readr")
 library(readr)
@@ -94,44 +96,48 @@ xlim(0,100)
 Maximum Distance 
 
 ```{r ride4, echo=FALSE}
-ggplot(rider_data_df, aes(x=max_distance)) + geom_histogram(bins =100,color = "white", fill = "#9FE367",boundary = 0.5) +
+ggplot(rider_data_df, aes(x=max_distance)) + geom_histogram(color = "white", fill = "#9FE367",boundary = 0.5) +
 geom_vline(aes(xintercept = mean(max_distance)), 
              linetype="dashed",
              size = 1.6, 
              color = "#FF0000") +
   stat_function(fun = dnorm.count, color = "#6D67E3", args = list(mean=mean(rider_data_df$max_distance), sd =sd(rider_data_df$max_distance), n = nrow(rider_data_df)), lwd = 1.2) + 
 geom_text(aes(label = paste0("mean = ", mean(max_distance)), 
-                x = 30, y  = 2000, color = "#FF0000")) + 
-annotate("text", label = "SD Curve", x = 25, y = 1600, size = 4, colour = "#6D67E3") + 
+                x = 200, y  = 10000, color = "#FF0000")) + 
+annotate("text", label = "SD Curve", x = 100, y = 3000, size = 4, colour = "#6D67E3") + 
 labs(x='Maximum distance (KM)', y = 'Frequency', title = 'Maximum distance riders')+
 # remove legend with theme()
 theme(legend.position = "None") +
-xlim(0,50) + 
-ylim(0,2500)
+xlim(0,800) + 
+ylim(0,50000)
 ```
 
 
 Weekend rides (fraction)
 
 ```{r ride5, echo=FALSE}
-percent <- function(x, digits = 2, format = "f", ...) {
-  paste0(formatC(100 * x, format = format, digits = digits, ...), "%")
-}
-rider_data_df <- mutate(rider_data_df, weekend_rides_F = weekend_rides/entries*100)
-ggplot(rider_data_df, aes(x=weekend_rides_F)) + geom_histogram(bins =20,color = "white", fill = "#9FE367",boundary = 0.5) +
+rider_data_df <- mutate(rider_data_df, weekend_rides_F = weekend_rides/entries)
+ggplot(rider_data_df, aes(x=weekend_rides_F)) + geom_histogram(color = "white", fill = "#9FE367") +
 geom_vline(aes(xintercept = mean(weekend_rides_F)), 
              linetype="dashed",
              size = 1.6, 
              color = "#FF0000") +
-  stat_function(fun = dnorm.count, color = "#6D67E3", args = list(mean=mean(rider_data_df$weekend_rides_F), sd =sd(rider_data_df$weekend_rides_F), n = nrow(rider_data_df)), lwd = 1.2) + 
-geom_text(aes(label = paste0("mean = ", percent(mean(weekend_rides_F/100))), 
-                x = 50, y  = 2000, color = "#FF0000")) + 
-annotate("text", label = "SD Curve", x = 45, y = 1000, size = 4, colour = "#6D67E3") + 
-labs(x='Weekend rides %', y = 'Frequency', title = 'Weekend rides %')+
+  geom_vline(aes(xintercept = mean(weekend_rides_F)+ sd(weekend_rides_F)), 
+             linetype="solid",
+             size = 1.6, 
+             color = "#6D67E3") +
+  geom_vline(aes(xintercept = mean(weekend_rides_F)- sd(weekend_rides_F)), 
+             linetype="solid",
+             size = 1.6, 
+             color = "#6D67E3") +
+geom_text(aes(label = paste0("mean = ", round(mean(weekend_rides_F), digits =4)), 
+                x = 0.9, y  = 2400, color = "#FF0000")) + 
+annotate("text", label = "SD Curve", x = 0.7, y = 3000, size = 4, colour = "#6D67E3") + 
+labs(x='Weekend rides/Entries', y = 'Frequency', title = 'Weekend rides/Entries')+
 # remove legend with theme()
 theme(legend.position = "None") +
-xlim(0,100) + 
-ylim(0,2500)
+xlim(0,1.2) + 
+ylim(0,7000)
 ```
 
 
